@@ -1,11 +1,158 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Em desenvolvimento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0f172a; /* night */
+      --bg2:#0b2545; /* deep blue */
+      --accent1:#7c3aed; /* purple */
+      --accent2:#06b6d4; /* cyan */
+      --glass: rgba(255,255,255,0.06);
+      --card: rgba(255,255,255,0.04);
+      --text: #e6eef8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+
+    body{
+      background: radial-gradient(1200px 600px at 10% 20%, rgba(124,58,237,0.12), transparent 10%),
+                  radial-gradient(1000px 500px at 90% 80%, rgba(6,182,212,0.08), transparent 10%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      display:flex;align-items:center;justify-content:center;min-height:100vh;padding:32px;
+    }
+
+    .stage{
+      width:100%;max-width:1100px;display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:center;
+    }
+
+    /* left big card */
+    .hero{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:18px;padding:48px;border:1px solid rgba(255,255,255,0.04);backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      position:relative;overflow:hidden;
+    }
+
+    .headline{
+      font-family:'Playfair Display', serif;font-size:clamp(36px,6vw,76px);line-height:0.9;margin:0 0 12px;font-weight:700;color:transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+      background: linear-gradient(90deg,var(--accent1),var(--accent2));
+      -webkit-background-clip: text;background-clip:text;filter: drop-shadow(0 6px 24px rgba(12,8,30,0.6));
+      letter-spacing: -1px;
+    }
+
+    .sub{
+      margin:0 0 18px;color:rgba(230,238,248,0.82);font-size:18px;font-weight:500;
+    }
+
+    .meta{display:flex;gap:12px;align-items:center;margin-top:18px}
+    .pill{background:var(--glass);padding:10px 14px;border-radius:999px;font-weight:600;font-size:13px;border:1px solid rgba(255,255,255,0.03)}
+
+    /* right small card */
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:28px;border-radius:16px;border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px);
+      box-shadow: 0 6px 18px rgba(2,6,23,0.45);
+    }
+    .panel h3{margin:0 0 8px;font-size:16px}
+    .panel p{margin:0;color:rgba(230,238,248,0.78);font-size:14px}
+
+    /* floating shapes */
+    .blob{position:absolute;border-radius:36%;filter:blur(40px);opacity:0.9;mix-blend-mode:screen}
+    .b1{width:360px;height:360px;left:-80px;top:-100px;background:linear-gradient(135deg,var(--accent1),#f472b6);animation:float 9s ease-in-out infinite}
+    .b2{width:250px;height:250px;right:-60px;bottom:-70px;background:linear-gradient(135deg,var(--accent2),#60a5fa);animation:float 11s ease-in-out infinite;opacity:0.85}
+
+    @keyframes float{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-18px) rotate(6deg)}100%{transform:translateY(0) rotate(0deg)}}
+
+    /* animated underline */
+    .headline::after{content:'';display:block;height:6px;margin-top:18px;border-radius:999px;background:linear-gradient(90deg,rgba(124,58,237,0.9),rgba(6,182,212,0.9));width:60%;max-width:360px;animation:slide 3s linear infinite}
+    @keyframes slide{0%{transform:scaleX(0.2)}50%{transform:scaleX(1.02)}100%{transform:scaleX(0.2)}}
+
+    /* responsive */
+    @media (max-width:900px){
+      .stage{grid-template-columns:1fr;gap:20px}
+      .hero{padding:36px}
+    }
+
+    /* footer */
+    footer{position:fixed;left:18px;bottom:18px;font-size:13px;color:rgba(230,238,248,0.6)}
+
+    /* small sparkle effect */
+    .sparkle{position:absolute;inset:0;pointer-events:none}
+    .sparkle i{position:absolute;width:6px;height:6px;background:linear-gradient(180deg,white,rgba(255,255,255,0.6));opacity:0.9;border-radius:2px;transform:rotate(45deg);filter:blur(0.6px);animation:pop 2.8s linear infinite}
+    .sparkle i:nth-child(2){left:18%;top:40%;animation-delay:0.3s}
+    .sparkle i:nth-child(3){left:52%;top:10%;animation-delay:0.5s}
+    .sparkle i:nth-child(4){left:86%;top:70%;animation-delay:0.9s}
+    .sparkle i:nth-child(5){left:40%;top:80%;animation-delay:1.4s}
+    @keyframes pop{0%{transform:scale(0.6) rotate(45deg);opacity:0}50%{opacity:1;transform:scale(1.1) rotate(45deg)}100%{opacity:0;transform:scale(0.8) rotate(45deg)}}
+
+    /* button */
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;font-weight:700;border:0;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;cursor:pointer;box-shadow:0 8px 20px rgba(6,12,40,0.45)}
+  </style>
 </head>
 <body>
-    
+  <main class="stage" role="main">
+    <section class="hero" aria-labelledby="title">
+      <div class="blob b1" aria-hidden="true"></div>
+      <div class="blob b2" aria-hidden="true"></div>
+
+      <h1 id="title" class="headline">Em desenvolvimento</h1>
+      <p class="sub">Estamos construindo algo incrível — volte em breve para novidades. Enquanto isso, aproveite este visual!</p>
+
+      <div class="meta" role="status" aria-live="polite">
+        <span class="pill">Design moderno</span>
+        <span class="pill">Efeito animado</span>
+        <span class="pill">Responsivo</span>
+      </div>
+
+      <div class="sparkle" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+    </section>
+
+    <aside class="panel" aria-labelledby="about">
+      <h3 id="about">O que estamos fazendo</h3>
+      <p>Atualizando o layout, otimizando performance e polindo a experiência. Quer prioridade em algo específico? Conta pra gente — esse é um exemplo estático.</p>
+      <div style="height:12px"></div>
+      <button class="btn" id="notify">Quero ser avisado</button>
+    </aside>
+  </main>
+
+  <footer>© Desenvolvido com carinho • <span id="year"></span></footer>
+
+  <script>
+    // set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // small canvas particles behind content for nice motion (lightweight)
+    (function(){
+      const canvas = document.createElement('canvas');
+      canvas.style.position='fixed';canvas.style.left=0;canvas.style.top=0;canvas.style.width='100%';canvas.style.height='100%';canvas.style.zIndex='0';canvas.style.pointerEvents='none';
+      document.body.appendChild(canvas);
+      const ctx=canvas.getContext('2d');
+      let w,h,particles=[];
+      function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
+      window.addEventListener('resize',resize);resize();
+      function make(){for(let i=0;i<28;i++){particles.push({x:Math.random()*w,y:Math.random()*h,r:1+Math.random()*2,vx:(Math.random()-0.5)*0.25,vy:(Math.random()-0.5)*0.25,alpha:0.04+Math.random()*0.12})}}
+      make();
+      function draw(){ctx.clearRect(0,0,w,h);for(const p of particles){p.x+=p.vx;p.y+=p.vy; if(p.x<0)p.x=w; if(p.x>w)p.x=0; if(p.y<0)p.y=h; if(p.y>h)p.y=0; ctx.beginPath(); ctx.fillStyle = 'rgba(255,255,255,'+p.alpha+')'; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill()}}
+      function loop(){draw();requestAnimationFrame(loop)}
+      loop();
+    })();
+
+    // button interaction (visual only)
+    document.getElementById('notify').addEventListener('click', ()=>{
+      const btn = document.getElementById('notify');
+      btn.textContent = 'Notificado!';
+      btn.setAttribute('aria-pressed','true');
+      btn.disabled = true;
+    });
+  </script>
 </body>
 </html>
